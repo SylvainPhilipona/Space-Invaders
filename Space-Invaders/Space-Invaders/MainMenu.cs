@@ -9,14 +9,14 @@ namespace Space_Invaders
         private Menu menu;
 
 
-        string[] title = new string[3]
+        private string[] title = new string[3]
         {
             "█   █ █▀▀ █   █▀▀ █▀▀█ █▀▄▀█ █▀▀",
             "█▄█▄█ █▀▀ █   █   █  █ █ ▀ █ █▀▀",
             " ▀ ▀  ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀ ▀   ▀ ▀▀▀"
         };
 
-        string[] options = new string[5]
+        private string[] options = new string[5]
         {
             "Jouer",
             "Options",
@@ -25,10 +25,10 @@ namespace Space_Invaders
             "Quitter"
         };
 
-        Dictionary<int, Action> optionsActions = new Dictionary<int, Action>()
+        private Dictionary<int, Action> optionsActions = new Dictionary<int, Action>()
         {
             { 0, () => new object()},
-            { 1, () => new object()},
+            { 1, () => new Options().Display()},
             { 2, () => new object()},
             { 3, () => new About().Display()},
             { 4, () => Environment.Exit(0)}
@@ -37,7 +37,7 @@ namespace Space_Invaders
         public MainMenu()
         {
             // Init the menu
-            menu = new Menu(title, options, optionsActions);
+            menu = new Menu(title, options, optionsActions, false);
         }
 
         public void Display()

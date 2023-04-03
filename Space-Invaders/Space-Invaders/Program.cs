@@ -24,7 +24,7 @@ namespace Space_Invaders
 
 
 
-            Console.Read();
+            //Console.Read();
         }
     }
 }

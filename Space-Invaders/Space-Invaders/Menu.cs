@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿///Author      : Sylvain Philipona
+///Date        : 03.04.2023
+///Description : Dynamic menu
 
 namespace Space_Invaders
 {
@@ -12,24 +10,39 @@ namespace Space_Invaders
         private const int OPTIONS_HEIGHT = 12;
         private const int OPTIONS_HEIGHT_INCREMENT = 3;
 
-
+        private bool hasSubOptions = false;
+        private bool canReturn;
         private int selection = 0;
-        private string[] title = new string[3];
-        private string[] options = new string[5];
-        private Dictionary<int, Action> optionsActions = new Dictionary<int, Action>();
+        private string[] title;
+        private string[] options;
+        private Dictionary<int, Action> optionsActions;
+        private Dictionary<int, string[]> subOptions;
+        private Dictionary<int, int> subSelections;
 
-        public Menu(string[] title, string[] options, Dictionary<int, Action> optionsActions)
+        public Menu(string[] title, string[] options, Dictionary<int, Action> optionsActions, bool canReturn)
         {
             this.title = title;
             this.options = options;
             this.optionsActions = optionsActions;
+            this.canReturn = canReturn;
         }
 
-        public Menu(string[] title, string[] options, Dictionary<int, Action> optionsActions, bool subOptions)
+        public Menu(string[] title, string[] options, Dictionary<int, Action> optionsActions, Dictionary<int, string[]> subOptions, bool canReturn)
         {
             this.title = title;
             this.options = options;
             this.optionsActions = optionsActions;
+
+            this.subOptions = subOptions;
+            this.hasSubOptions = true;
+
+            this.subSelections = new Dictionary<int, int>();
+            foreach(var subOption in subOptions)
+            {
+                this.subSelections.Add(subOption.Key, 1);
+            }
+
+            this.canReturn = canReturn;
         }
 
         public void SelectNext()
@@ -62,6 +75,36 @@ namespace Space_Invaders
             DisplayMenu();
         }
 
+        public void SelectNextSub()
+        {
+            if(subSelections[selection] >= subOptions[selection].Length - 1)
+            {
+                subSelections[selection] = 0;
+            }
+            else
+            {
+                subSelections[selection]++;
+            }
+
+            
+
+            DisplayMenu();
+        }
+
+        public void SelectPreviousSub()
+        {
+            if(subSelections[selection] - 1 < 0)
+            {
+                subSelections[selection] = subOptions[selection].Length - 1;
+            }
+            else
+            {
+                subSelections[selection]--;
+            }
+
+            DisplayMenu();
+        }
+
         public void SelectCurrent()
         {
             // Start the selected option
@@ -70,6 +113,8 @@ namespace Space_Invaders
 
         public void DisplayMenu()
         {
+            //Console.Clear();
+
             // Display the title message
             for (int i = 0; i < title.Length; i++)
             {
@@ -82,22 +127,61 @@ namespace Space_Invaders
             //Display all the options
             for (int i = 0; i < options.Length; i++)
             {
-                string option = options[i];
-                int XPos = Utils.GetCenterPositionX(option, Utils.MENU_WIDTH);
-                int YPos = OPTIONS_HEIGHT + i * OPTIONS_HEIGHT_INCREMENT;
 
-                // Display the selection
-                if (i == selection)
+                if (hasSubOptions)
                 {
-                    DisplaySelection(option, XPos, YPos);
-                    continue;
-                }
+                    string option = options[i];
+                    string subOption = "";
+                    string result = option;
 
-                // Clear the old selection cursor and display the option
-                Console.SetCursorPosition(XPos - 2, YPos);
-                Console.WriteLine(" ");
-                Console.SetCursorPosition(XPos, YPos);
-                Console.WriteLine(option);
+                    if (subOptions[i].Length > 0)
+                    {
+                        subOption = subOptions[i][subSelections[i]];
+                        result = $"{option}:{subOption}";
+                    }
+
+                    int XPos = Utils.GetCenterPositionX(result, Utils.MENU_WIDTH);
+                    int YPos = OPTIONS_HEIGHT + i * OPTIONS_HEIGHT_INCREMENT;
+                    Utils.ClearLine(YPos, Utils.MENU_WIDTH);
+
+                    // Display the selection
+                    if (i == selection)
+                    {
+                        DisplaySelection(result, XPos, YPos);
+                        continue;
+                    }
+
+                    Console.SetCursorPosition(XPos - 2, YPos);
+                    Console.WriteLine(" ");
+                    Console.SetCursorPosition(XPos, YPos);
+                    Console.WriteLine(result);
+                }
+                else
+                {
+                    string option = options[i];
+                    int XPos = Utils.GetCenterPositionX(option, Utils.MENU_WIDTH);
+                    int YPos = OPTIONS_HEIGHT + i * OPTIONS_HEIGHT_INCREMENT;
+                    Utils.ClearLine(YPos, Utils.MENU_WIDTH);
+
+                    // Display the selection
+                    if (i == selection)
+                    {
+                        DisplaySelection(option, XPos, YPos);
+                        continue;
+                    }
+
+                    // Clear the old selection cursor and display the option
+                    Console.SetCursorPosition(XPos - 2, YPos);
+                    Console.WriteLine(" ");
+                    Console.SetCursorPosition(XPos, YPos);
+                    Console.WriteLine(option);
+                }
+            }
+
+            if (canReturn)
+            {
+                //DisplayReturn(OPTIONS_HEIGHT + options.Length * OPTIONS_HEIGHT_INCREMENT);
+
             }
 
         }
@@ -112,6 +196,14 @@ namespace Space_Invaders
             Console.WriteLine(selection);
             Console.ForegroundColor = Utils.DEFAULT_COLOR;
 
+        }
+
+        private void DisplayReturn(int YPos)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(Utils.GetCenterPositionX("Retour", Utils.MENU_WIDTH), YPos);
+            Console.WriteLine("Retour");
+            Console.ForegroundColor = Utils.DEFAULT_COLOR;
         }
 
 

@@ -55,6 +55,15 @@ namespace Space_Invaders
             Console.SetBufferSize(width, height);
         }
 
+        public static void ClearLine(int YPos, int windowsWidth)
+        {
+            Console.SetCursorPosition(0, YPos);
+            for (int i = 0; i < windowsWidth; i++)
+            {
+                Console.Write(" ");
+            }
+        }
+
 
 
 
