@@ -12,15 +12,19 @@ namespace Space_Invaders
             Console.CursorVisible = false;
 
             //Call the menu class
-            Menu menu = new Menu();
-            menu.DisplayMenu();
-            menu.Select();
+            //MainMenu menu = new MainMenu();
+            //menu.DisplayMenu();
+            //menu.Select();
+
+
+            MainMenu menu = new MainMenu();
+            menu.Display();
 
 
 
 
 
-            //Console.Read();
+            Console.Read();
         }
     }
 }
