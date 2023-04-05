@@ -75,7 +75,7 @@ namespace Space_Invaders
             DisplayMenu();
         }
 
-        public void SelectNextSub()
+        public int[] SelectNextSub()
         {
             if(subSelections[selection] >= subOptions[selection].Length - 1)
             {
@@ -89,9 +89,11 @@ namespace Space_Invaders
             
 
             DisplayMenu();
+
+            return new int[2] { selection, subSelections[selection] };
         }
 
-        public void SelectPreviousSub()
+        public int[] SelectPreviousSub()
         {
             if(subSelections[selection] - 1 < 0)
             {
@@ -103,6 +105,8 @@ namespace Space_Invaders
             }
 
             DisplayMenu();
+
+            return new int[2] { selection, subSelections[selection] };
         }
 
         public void SelectCurrent()

@@ -8,7 +8,8 @@ namespace Space_Invaders
 {
     internal static class Configs
     {
-
+        public static Utils.difficulties difficulty = Utils.difficulties.Moyen;
+        public static bool sound = true; //On
 
 
 

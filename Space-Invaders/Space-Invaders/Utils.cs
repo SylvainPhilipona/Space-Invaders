@@ -24,7 +24,12 @@ namespace Space_Invaders
         public const ConsoleColor SELECTION_COLOR = ConsoleColor.Green;
 
 
-
+        public enum difficulties
+        {
+            Facile,
+            Moyen,
+            Difficile
+        };
 
 
         ///// METHODS /////
@@ -64,7 +69,15 @@ namespace Space_Invaders
             }
         }
 
+        public static void SetDifficulty(int difficulty)
+        {
+            Configs.difficulty = (difficulties)difficulty;
+        }
 
+        public static void SetSound(bool sound)
+        {
+            Configs.sound = sound;
+        }
 
 
     }
