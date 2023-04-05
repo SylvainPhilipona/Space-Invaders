@@ -14,11 +14,15 @@ namespace Space_Invaders
     {
         ///// CONSTANTS /////
         
-        
-
         public const int MENU_WIDTH = 48;
         public const int MENU_HEIGHT = 45;
         public const int TITLE_HEIGHT = 5;
+
+
+        public const int GAME_WIDTH = 200;
+        public const int GAME_HEIGHT = 45;
+
+
 
         public const ConsoleColor DEFAULT_COLOR = ConsoleColor.Gray;
         public const ConsoleColor SELECTION_COLOR = ConsoleColor.Green;
@@ -29,6 +33,13 @@ namespace Space_Invaders
             Facile,
             Moyen,
             Difficile
+        };
+
+        public static Dictionary<difficulties, int> lifes = new Dictionary<difficulties, int>()
+        {
+            {difficulties.Facile, 5},
+            {difficulties.Moyen, 3},
+            {difficulties.Difficile, 1}
         };
 
 

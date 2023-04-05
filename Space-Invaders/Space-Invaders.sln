@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space-Invaders", "Space-Invaders\Space-Invaders.csproj", "{AFCBF5B9-474B-47DB-899F-DAD09A3D3B3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Space-Invaders", "Space-Invaders\Space-Invaders.csproj", "{AFCBF5B9-474B-47DB-899F-DAD09A3D3B3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{6099641D-BC67-4C23-ACC5-F2E2628DFAD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

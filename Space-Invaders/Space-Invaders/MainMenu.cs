@@ -27,7 +27,7 @@ namespace Space_Invaders
 
         private Dictionary<int, Action> optionsActions = new Dictionary<int, Action>()
         {
-            { 0, () => new object()},
+            { 0, () => new Game().Start()},
             { 1, () => new Options().Display()},
             { 2, () => new object()},
             { 3, () => new About().Display()},
