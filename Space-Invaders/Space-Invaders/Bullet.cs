@@ -30,11 +30,11 @@ namespace Space_Invaders
             Render.AddRender(x, y, "║");
 
             // Check if the bullet ran into a wall
-            var test = Configs.wallsCollisions.Find(obj => (obj.x == x && obj.y == y));
-            if (test.x != 0 && test.y != 0)
+            (int x, int y) collision = Configs.wallsCollisions.Find(obj => (obj.x == x && obj.y == y));
+            if (collision.x != 0 && collision.y != 0)
             {
                 Render.AddRender(x, y, " ");
-                Configs.wallsCollisions.Remove(test);
+                Configs.wallsCollisions.Remove(collision);
                 return true;
             }
 

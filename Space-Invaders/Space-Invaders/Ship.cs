@@ -86,11 +86,6 @@ namespace Space_Invaders
 
 
             nbBullets = bullets.Where(b => b != null).Count();
-
-
-
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine($"Bullets : {nbBullets}");
         }
     }
 }

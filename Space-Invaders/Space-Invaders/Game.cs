@@ -48,6 +48,9 @@ namespace Space_Invaders
             Ship ship = new Ship(100, 40);
             ship.DisplayShip();
 
+            // Create the ennemies
+
+
 
 
             var test = Configs.wallsCollisions.Find(obj => (obj.x == 5 && obj.y == 6));
