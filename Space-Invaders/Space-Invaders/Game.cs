@@ -30,11 +30,27 @@ namespace Space_Invaders
         {
             Utils.SetWindowsSize(Utils.GAME_WIDTH, Utils.GAME_HEIGHT);
             Console.Clear();
+            Configs.wallsCollisions = new List<(int x, int y)>();
+
+            // Create the walls
+            Wall[] walls = new Wall[3]{
+                new Wall(10, 30),
+                new Wall(50, 30),
+                new Wall(80, 30)
+            };
+            foreach(Wall wall in walls)
+            {
+                wall.DisplayWall();
+            }
+            
 
             // Create the ship
-            Ship ship = new Ship(10, 10);
+            Ship ship = new Ship(100, 40);
             ship.DisplayShip();
 
+
+
+            var test = Configs.wallsCollisions.Find(obj => (obj.x == 5 && obj.y == 6));
 
             do
             {
@@ -60,7 +76,6 @@ namespace Space_Invaders
                 if (CheckKeyPressed(ConsoleKey.Spacebar))
                 {
                     ship.Shoot();
-                    //ship.RefreshBullets();
                 }
 
 
@@ -95,11 +110,12 @@ namespace Space_Invaders
 
 
                 ship.RefreshBullets();
-                Thread.Sleep(20);
+                Render.RenderAll();
+
+
+                Thread.Sleep(1);
             } 
             while (true);
-
-            Console.ReadLine();
         }
 
 

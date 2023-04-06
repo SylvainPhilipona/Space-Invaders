@@ -11,7 +11,7 @@ namespace Space_Invaders
         private int x;
         private int y;
         private int nbBullets;
-        private Bullet[] bullets;
+        private List<Bullet> bullets;
 
         private string[] ship = new string[4]
         {
@@ -26,7 +26,7 @@ namespace Space_Invaders
             this.x = x;
             this.y = y;
             this.nbBullets = 0;
-            this.bullets = new Bullet[Configs.nbBullets];
+            this.bullets = new List<Bullet>();
         }
 
         public void DisplayShip()
@@ -34,50 +34,56 @@ namespace Space_Invaders
             int i = 0;
             foreach(string line in ship)
             {
-                Console.SetCursorPosition(x,y+i);
-                Console.Write($" {line} ");
-
-
+                Render.AddRender(x, y + i, $" {line} ");
                 i++;
             }
         }
 
         public void MoveLeft()
         {
-            x--;
-            DisplayShip();
+            if (x - 1 >= 0)
+            {
+                x--;
+                DisplayShip();
+            }
+
         }
 
         public void MoveRight()
         {
-            x++;
-            DisplayShip();
+            if (x + ship[0].Length + 3 <= Utils.GAME_WIDTH)
+            {
+                x++;
+                DisplayShip();
+            }
         }
 
         public void Shoot()
         {
             if(nbBullets < Configs.nbBullets)
             {
-                bullets[nbBullets] = new Bullet(x+3, y-1);
+                bullets.Add(new Bullet(x+3, y-1));
             }
             nbBullets = bullets.Where(b => b != null).Count();
+
         }
 
         public void RefreshBullets()
         {
-            for (int i = 0; i < bullets.Length; i++)
+
+            foreach (Bullet bullet in bullets.ToList())
             {
-                if(bullets[i] != null)
+                if (bullet != null)
                 {
-                    bool reachedTop = bullets[i].MoveUp();
+                    bool reachedTop = bullet.MoveUp();
 
                     if (reachedTop)
                     {
-                        bullets[i] = null;
+                        bullets[bullets.IndexOf(bullet)] = null;
                     }
-
                 }
             }
+
 
             nbBullets = bullets.Where(b => b != null).Count();
 
@@ -85,11 +91,6 @@ namespace Space_Invaders
 
             Console.SetCursorPosition(0, 0);
             Console.WriteLine($"Bullets : {nbBullets}");
-
-            foreach(Bullet bullet in bullets)
-            {
-                Console.WriteLine($"{bullet != null}");
-            }
         }
     }
 }

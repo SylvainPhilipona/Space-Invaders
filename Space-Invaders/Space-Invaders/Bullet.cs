@@ -22,15 +22,22 @@ namespace Space_Invaders
             // Check if the bullet is arrived at top
             if(y-1 < 0)
             {
+                Render.AddRender(x, y, " ");
                 return true;
             }
 
+            Render.AddRender(x, y--, " ");
+            Render.AddRender(x, y, "║");
 
-            Console.SetCursorPosition(x, y);
-            Console.Write(" ");
-            y = y - 1;
-            Console.SetCursorPosition(x, y);
-            Console.Write("|");
+            // Check if the bullet ran into a wall
+            var test = Configs.wallsCollisions.Find(obj => (obj.x == x && obj.y == y));
+            if (test.x != 0 && test.y != 0)
+            {
+                Render.AddRender(x, y, " ");
+                Configs.wallsCollisions.Remove(test);
+                return true;
+            }
+
 
 
             return false;
