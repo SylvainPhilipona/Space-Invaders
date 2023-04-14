@@ -6,7 +6,7 @@ using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using System.Diagnostics;
 
 namespace Space_Invaders
 {
@@ -39,12 +39,13 @@ namespace Space_Invaders
                 new Wall(50, 30),
                 new Wall(80, 30)
             };
+
+            // Display the walls
             foreach(Wall wall in walls)
             {
                 wall.DisplayWall();
             }
             
-
             // Create the ship
             Ship ship = new Ship(100, 40);
             ship.DisplayShip();
@@ -54,15 +55,15 @@ namespace Space_Invaders
 
 
 
-            var test = Configs.wallsCollisions.Find(obj => (obj.x == 5 && obj.y == 6));
+            DateTime lastTime;
+            lastTime = DateTime.Now;
 
+            int FPS = 0;
             do
             {
-
                 /***********************************************************/
                 /*                 Priority on user inputs                 */
                 /***********************************************************/
-
 
                 // Check if the user press right arrow
                 if (CheckKeyPressed(ConsoleKey.RightArrow))
@@ -90,34 +91,40 @@ namespace Space_Invaders
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                // Refresh the bullets and render the view
                 ship.RefreshBullets();
                 Render.RenderAll();
 
+                //// Calculate the time to sleep to match the FPS
+                //frameTime.Stop();
+                //int timeElapsed = Convert.ToInt32(frameTime.Elapsed.TotalMilliseconds);
+                //int timeToSleep = 1000 / Configs.FPS - timeElapsed;
 
-                Thread.Sleep(1);
+                //// If the time to sleep is inferiour to 1
+                //if (timeToSleep < 1)
+                //{
+                //    // Set the time to sleep by default calculus
+                //    timeToSleep = 1000 / Configs.FPS;
+                //}
+
+                FPS++;
+
+                if ((DateTime.Now - lastTime).TotalSeconds >= 1)
+                {
+                    // one second has elapsed 
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write($"{FPS} fps             ");
+
+                    FPS = 0;
+                    lastTime = DateTime.Now;
+                }
+
+                //Console.SetCursorPosition(0, 1);
+                //Console.Write($"{timeToSleep} ms      ");
+
+                //// Sleep
+                //Thread.Sleep(timeToSleep);
+                Thread.Sleep(8); // Sould be 125 FPS
             } 
             while (true);
         }

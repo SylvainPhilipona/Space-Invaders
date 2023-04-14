@@ -37,7 +37,6 @@ namespace Space_Invaders
             }
 
 
-
             //Console encoding
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;

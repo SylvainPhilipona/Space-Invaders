@@ -5,3 +5,10 @@ C:\Users\HP\Downloads\Space-Invaders\obj\Debug\Space-Invaders.csproj.AssemblyRef
 C:\Users\HP\Downloads\Space-Invaders\obj\Debug\Space-Invaders.csproj.CoreCompileInputs.cache
 C:\Users\HP\Downloads\Space-Invaders\obj\Debug\Space-Invaders.exe
 C:\Users\HP\Downloads\Space-Invaders\obj\Debug\Space-Invaders.pdb
+C:\Users\HP\github\Space-Invaders\Space-Invaders\bin\Debug\Space-Invaders.exe.config
+C:\Users\HP\github\Space-Invaders\Space-Invaders\bin\Debug\Space-Invaders.exe
+C:\Users\HP\github\Space-Invaders\Space-Invaders\bin\Debug\Space-Invaders.pdb
+C:\Users\HP\github\Space-Invaders\Space-Invaders\obj\Debug\Space-Invaders.csproj.AssemblyReference.cache
+C:\Users\HP\github\Space-Invaders\Space-Invaders\obj\Debug\Space-Invaders.csproj.CoreCompileInputs.cache
+C:\Users\HP\github\Space-Invaders\Space-Invaders\obj\Debug\Space-Invaders.exe
+C:\Users\HP\github\Space-Invaders\Space-Invaders\obj\Debug\Space-Invaders.pdb

@@ -1,0 +1,4 @@
+﻿L'opération de génération a démarré...
+1>------ Début de la génération : Projet : Space-Invaders, Configuration : Debug Any CPU ------
+1>C:\Users\HP\github\Space-Invaders\Space-Invaders\Game.cs(132,55,132,55): error CS1002: ; attendu
+========== Génération : 0 a réussi, 1 a échoué, 0 à jour, 0 a été ignoré ==========
