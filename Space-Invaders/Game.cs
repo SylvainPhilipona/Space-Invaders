@@ -47,19 +47,9 @@ namespace Space_Invaders
             }
 
             // Create the ship
-            //Ship ship = new Ship(100, 40);
-            //ship.DisplayShip();
+            Ship ship = new Ship(100, 40);
+            ship.DisplayShip();
 
-            List<Ship> ships = new List<Ship>();
-            for (int i = 1; i <= 30; i++)
-            {
-                for (int j = 0; j < 10; j++)
-                {
-                    Ship ship = new Ship(i * 6, 40);
-                    ships.Add(ship);
-                    ship.DisplayShip();
-                }
-            }
 
 
 
@@ -70,8 +60,8 @@ namespace Space_Invaders
 
 
             Stopwatch timer = new Stopwatch();
-            DateTime lastTime;
-            lastTime = DateTime.Now;
+            DateTime lastTime = DateTime.Now;
+            DateTime lastShoot = DateTime.Now.AddDays(-1);
 
             int FPS = 0;
             do
@@ -87,27 +77,23 @@ namespace Space_Invaders
                 // Check if the user press right arrow
                 if (CheckKeyPressed(ConsoleKey.RightArrow))
                 {
-                    foreach (Ship ship in ships)
-                    {
-                        ship.MoveRight();
-                    }
+                    ship.MoveRight();    
                 }
 
                 // Check if the user press left arrow
                 if (CheckKeyPressed(ConsoleKey.LeftArrow))
                 {
-                    foreach (Ship ship in ships)
-                    {
-                        ship.MoveLeft();
-                    }
+                    ship.MoveLeft();   
                 }
 
                 // Check if the user press spacebar
                 if (CheckKeyPressed(ConsoleKey.Spacebar))
                 {
-                    foreach (Ship ship in ships)
+                    // If the time since the last shoot is at least the required value
+                    if((DateTime.Now - lastShoot).TotalMilliseconds >= Configs.timeBetweenBullets)
                     {
                         ship.Shoot();
+                        lastShoot = DateTime.Now;
                     }
                 }
 
@@ -115,10 +101,7 @@ namespace Space_Invaders
 
 
                 // Refresh the bullets and render the view
-                foreach (Ship ship in ships)
-                {
-                    ship.RefreshBullets();
-                }
+                ship.RefreshBullets();    
                 Render.RenderAll();
 
 
@@ -139,9 +122,10 @@ namespace Space_Invaders
                 // Wait till the elapsed time is inferious to the frame rate
                 while (timer.ElapsedMilliseconds < 1000 / Configs.FPS)
                 {
-                    Thread.Sleep(0);
+                    // DO NOTHING
                 }
-            } 
+
+            }
             while (true);
         }
 
