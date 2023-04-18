@@ -11,7 +11,7 @@ namespace Space_Invaders
         public static Utils.difficulties difficulty = Utils.difficulties.Moyen;
         public static bool sound = true; //On
         public static int nbBullets = 50;
-        public static int FPS = 120;
+        public static int FPS = 60;
 
         public static readonly object obj = new object();
 

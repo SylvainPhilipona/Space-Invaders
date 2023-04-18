@@ -45,22 +45,41 @@ namespace Space_Invaders
             {
                 wall.DisplayWall();
             }
-            
+
             // Create the ship
-            Ship ship = new Ship(100, 40);
-            ship.DisplayShip();
+            //Ship ship = new Ship(100, 40);
+            //ship.DisplayShip();
+
+            List<Ship> ships = new List<Ship>();
+            for (int i = 1; i <= 30; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Ship ship = new Ship(i * 6, 40);
+                    ships.Add(ship);
+                    ship.DisplayShip();
+                }
+            }
+
+
+
+
 
             // Create the ennemies
 
 
 
-
+            Stopwatch timer = new Stopwatch();
             DateTime lastTime;
             lastTime = DateTime.Now;
 
             int FPS = 0;
             do
             {
+                // Restart the frame timer
+                timer.Restart();
+
+
                 /***********************************************************/
                 /*                 Priority on user inputs                 */
                 /***********************************************************/
@@ -68,47 +87,44 @@ namespace Space_Invaders
                 // Check if the user press right arrow
                 if (CheckKeyPressed(ConsoleKey.RightArrow))
                 {
-                    ship.MoveRight();
+                    foreach (Ship ship in ships)
+                    {
+                        ship.MoveRight();
+                    }
                 }
 
                 // Check if the user press left arrow
                 if (CheckKeyPressed(ConsoleKey.LeftArrow))
                 {
-                    ship.MoveLeft();
+                    foreach (Ship ship in ships)
+                    {
+                        ship.MoveLeft();
+                    }
                 }
 
                 // Check if the user press spacebar
                 if (CheckKeyPressed(ConsoleKey.Spacebar))
                 {
-                    ship.Shoot();
+                    foreach (Ship ship in ships)
+                    {
+                        ship.Shoot();
+                    }
                 }
 
 
 
 
-
-
-
-
-
                 // Refresh the bullets and render the view
-                ship.RefreshBullets();
+                foreach (Ship ship in ships)
+                {
+                    ship.RefreshBullets();
+                }
                 Render.RenderAll();
 
-                //// Calculate the time to sleep to match the FPS
-                //frameTime.Stop();
-                //int timeElapsed = Convert.ToInt32(frameTime.Elapsed.TotalMilliseconds);
-                //int timeToSleep = 1000 / Configs.FPS - timeElapsed;
 
-                //// If the time to sleep is inferiour to 1
-                //if (timeToSleep < 1)
-                //{
-                //    // Set the time to sleep by default calculus
-                //    timeToSleep = 1000 / Configs.FPS;
-                //}
 
+                // Display the current FPS every seconds
                 FPS++;
-
                 if ((DateTime.Now - lastTime).TotalSeconds >= 1)
                 {
                     // one second has elapsed 
@@ -119,12 +135,12 @@ namespace Space_Invaders
                     lastTime = DateTime.Now;
                 }
 
-                //Console.SetCursorPosition(0, 1);
-                //Console.Write($"{timeToSleep} ms      ");
 
-                //// Sleep
-                //Thread.Sleep(timeToSleep);
-                Thread.Sleep(8); // Sould be 125 FPS
+                // Wait till the elapsed time is inferious to the frame rate
+                while (timer.ElapsedMilliseconds < 1000 / Configs.FPS)
+                {
+                    Thread.Sleep(0);
+                }
             } 
             while (true);
         }
