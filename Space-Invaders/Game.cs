@@ -12,12 +12,8 @@ namespace Space_Invaders
 {
     internal class Game
     {
-
         [DllImport("user32.dll")]
         public static extern short GetAsyncKeyState(int key);
-
-
-
 
 
         public Game() 
@@ -61,69 +57,88 @@ namespace Space_Invaders
 
             Stopwatch timer = new Stopwatch();
             DateTime lastTime = DateTime.Now;
-            DateTime lastShoot = DateTime.Now.AddDays(-1);
+            DateTime lastShoot = DateTime.Now.AddMilliseconds(-Utils.TIME_BETWEEN_BULLETS);
 
             int FPS = 0;
+            bool pause = false;
             do
             {
-                // Restart the frame timer
-                timer.Restart();
-
-
-                /***********************************************************/
-                /*                 Priority on user inputs                 */
-                /***********************************************************/
-
-                // Check if the user press right arrow
-                if (CheckKeyPressed(ConsoleKey.RightArrow))
+                if (CheckKeyPressed(ConsoleKey.Escape))
                 {
-                    ship.MoveRight();    
+                    pause = !pause;
+                    Thread.Sleep(100);
                 }
 
-                // Check if the user press left arrow
-                if (CheckKeyPressed(ConsoleKey.LeftArrow))
+                if (!pause)
                 {
-                    ship.MoveLeft();   
-                }
+                    // Restart the frame timer
+                    timer.Restart();
 
-                // Check if the user press spacebar
-                if (CheckKeyPressed(ConsoleKey.Spacebar))
-                {
-                    // If the time since the last shoot is at least the required value
-                    if((DateTime.Now - lastShoot).TotalMilliseconds >= Configs.timeBetweenBullets)
+
+                    /***********************************************************/
+                    /*                 Priority on user inputs                 */
+                    /***********************************************************/
+
+                    // Check if the user press right arrow
+                    if (CheckKeyPressed(ConsoleKey.RightArrow))
                     {
-                        ship.Shoot();
-                        lastShoot = DateTime.Now;
+                        ship.MoveRight();
+                    }
+
+                    // Check if the user press left arrow
+                    if (CheckKeyPressed(ConsoleKey.LeftArrow))
+                    {
+                        ship.MoveLeft();
+                    }
+
+                    // Check if the user press spacebar
+                    if (CheckKeyPressed(ConsoleKey.Spacebar))
+                    {
+                        // If the time since the last shoot is at least the required value
+                        if ((DateTime.Now - lastShoot).TotalMilliseconds >= Utils.TIME_BETWEEN_BULLETS)
+                        {
+                            ship.Shoot();
+                            lastShoot = DateTime.Now;
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                    // Refresh the bullets and render the view
+                    ship.RefreshBullets();
+                    Render.RenderAll();
+
+
+
+                    // Display the current FPS every seconds
+                    FPS++;
+                    if ((DateTime.Now - lastTime).TotalSeconds >= 1)
+                    {
+                        // one second has elapsed 
+                        Console.SetCursorPosition(0, 0);
+                        Console.Write($"{FPS} fps             ");
+
+                        FPS = 0;
+                        lastTime = DateTime.Now;
+                    }
+
+
+                    // Wait till the elapsed time is inferious to the frame rate
+                    while (timer.ElapsedMilliseconds < 1000 / Utils.FPS)
+                    {
+                        // DO NOTHING
                     }
                 }
-
-
-
-
-                // Refresh the bullets and render the view
-                ship.RefreshBullets();    
-                Render.RenderAll();
-
-
-
-                // Display the current FPS every seconds
-                FPS++;
-                if ((DateTime.Now - lastTime).TotalSeconds >= 1)
-                {
-                    // one second has elapsed 
-                    Console.SetCursorPosition(0, 0);
-                    Console.Write($"{FPS} fps             ");
-
-                    FPS = 0;
-                    lastTime = DateTime.Now;
-                }
-
-
-                // Wait till the elapsed time is inferious to the frame rate
-                while (timer.ElapsedMilliseconds < 1000 / Configs.FPS)
-                {
-                    // DO NOTHING
-                }
+                
 
             }
             while (true);
@@ -139,18 +154,13 @@ namespace Space_Invaders
                 {ConsoleKey.LeftArrow, 0x25 },
                 {ConsoleKey.RightArrow, 0x27 },
                 {ConsoleKey.Spacebar, 0x20 },
-                {ConsoleKey.Enter, 0x0D }
+                {ConsoleKey.Enter, 0x0D },
+                {ConsoleKey.Escape, 0x1B },
             };
 
             int VK = table[key];
 
-            if ((GetAsyncKeyState(VK) & 0x8000) != 0)
-            {
-                return true;
-            }
-
-
-            return false;
+            return (GetAsyncKeyState(VK) & 0x8000) != 0;
         }
     }
 }

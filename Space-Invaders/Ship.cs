@@ -60,7 +60,7 @@ namespace Space_Invaders
 
         public void Shoot()
         {
-            if(nbBullets < Configs.nbBullets)
+            if(nbBullets < Utils.NB_BULLETS)
             {
                 bullets.Add(new Bullet(x+3, y-1));
             }

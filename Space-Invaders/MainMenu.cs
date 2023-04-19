@@ -34,15 +34,15 @@ namespace Space_Invaders
             int option4 = menu.AddOption("A propos", (() => new About().Display()));
             int option5 = menu.AddOption("Quitter", (() => Environment.Exit(0)));
 
-            // Add the suboptions
-            menu.AddSubOption(option1, "Dur");
-            menu.AddSubOption(option1, "Facile");
-            menu.AddSubOption(option1, "easy");
+            //// Add the suboptions
+            //menu.AddSubOption(option1, "Dur");
+            //menu.AddSubOption(option1, "Facile");
+            //menu.AddSubOption(option1, "easy");
 
-            menu.AddSubOption(option3, "Un");
-            menu.AddSubOption(option3, "Deux");
-            menu.AddSubOption(option3, "Trois");
-            menu.AddSubOption(option3, "Quatre");
+            //menu.AddSubOption(option3, "Un");
+            //menu.AddSubOption(option3, "Deux");
+            //menu.AddSubOption(option3, "Trois");
+            //menu.AddSubOption(option3, "Quatre");
 
 
             // Infinite loop

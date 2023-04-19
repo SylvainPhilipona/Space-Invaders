@@ -101,15 +101,19 @@ namespace Space_Invaders
 
         public void SelectSub()
         {
-            if(subSelections[selection]+1 >= subOptions[selection].Count)
+            if(subSelections.ContainsKey(selection))
             {
-                subSelections[selection] = 0;
-            }
-            else
-            {
-                subSelections[selection]++;
+                if (subSelections[selection] + 1 >= subOptions[selection].Count)
+                {
+                    subSelections[selection] = 0;
+                }
+                else
+                {
+                    subSelections[selection]++;
 
+                }
             }
+            
 
         }
 

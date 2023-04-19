@@ -21,6 +21,9 @@ namespace Space_Invaders
 
         public const int GAME_WIDTH = 200;
         public const int GAME_HEIGHT = 45;
+        public const int NB_BULLETS = 250;
+        public const int TIME_BETWEEN_BULLETS = 15; // Miliseconds
+        public const int FPS = 60;
 
 
 
